@@ -1,14 +1,21 @@
-{% extends 'home/base.html' %}
-{% block title %} BlogHome {% endblock title %}
-
+{% extends 'home/base.html' %} {% block title %} BlogHome {% endblock title %}
 {% block body %}
 <div class="container my-3">
-<div class="blog-post">
-        <h2 class="blog-post-title">{{allPosts.title}}</h2>
-        <p class="blog-post-meta">{{allPost.timeStamp}} by <a href="#">{{allPosts.author}}</a></p>
+  <div class="blog-post">
+    <h2 class="blog-post-title">{{allPosts.title}}</h2>
+    <p class="blog-post-meta">
+      {{allPost.timeStamp}} by <a href="#">{{allPosts.author}}</a>
+    </p>
 
-        <p>{{allPosts.content}}</p>
-        <hr>
-      </div>
-      </div>
- {% endblock %}
+    <p>{{allPosts.content}}</p>
+    <hr />
+    <h2>Comments:</h2>
+    <form action="{% url 'postcomment' %}" method="post">
+      {% csrf_token %}
+      <input type="text" name="comment" placeholder="Enter comment here" />
+      <input type="hidden" name="postSno" value="{{allPosts.sno}}" />
+      <input type="submit" value="Submit" />
+    </form>
+  </div>
+</div>
+{% endblock %}
